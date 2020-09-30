@@ -1,0 +1,11 @@
+django
+mysqlclient
+django-cors-headers
+django-rest-framework
+django-extensions
+redis
+pytz
+requests
+djangorestframework_simplejwt
+
+
