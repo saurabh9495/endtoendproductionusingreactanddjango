@@ -25,26 +25,16 @@ class SingletonThread(Thread):
         self.daemon = True
 
 
-# Maintaining a list of all queued items
-queued_list = []
-# Maintaining a list of all running items
-running_list = []
-# Maintaining a list of all successful items
-successful_list = []
-
-
 class MoveCreatedJobstoQueue(SingletonThread):
     def run(self):
         print("ScheduleUpkeep worker started! Mover Thread")
         while 1:
-            sleep(60)
+            sleep(10)
             self.check_schedule()
 
     def check_schedule(self):
         for c in Create.objects.filter(enabled=True):
-            print(c, "Mover Thread Queue Addition")
-            if c in queued_list:
-                continue
+            # print(c, "Mover Thread Queue Addition")
             with transaction.atomic():
                 s = Queue()
                 s.name = c
@@ -53,26 +43,23 @@ class MoveCreatedJobstoQueue(SingletonThread):
                 s.enabled = c.enabled
                 s.others = c.others
                 s.save()
-                queued_list.append(c)
 
-        for q in Queue.objects.filter(enabled=True):
-            print(q, "Worker Thread Run Addition")
-            if q in running_list:
-                continue
-            with transaction.atomic():
-                s = Run()
-                s.name = q
-                s.time = q.time
-                s.description = q.description
-                s.enabled = q.enabled
-                s.others = q.others
-                s.save()
-                running_list.append(q)
+                create_edit = Create.objects.get(id=c.id)  # object to update
+                create_edit.enabled = False  # update name
+                create_edit.save()  # save object
 
-        for r in Run.objects.filter(enabled=False):
-            print(r, "Worker Thread Successful Addition")
-            if r in successful_list:
+        for r in Run.objects.filter(time=0):
+            # print(r, "Worker Thread Successful Addition")
+            success_exist = False
+
+            for rt in Success.objects.filter():
+                if rt.name_id == r.id:
+                    success_exist = True
+                    break
+
+            if success_exist:
                 continue
+
             with transaction.atomic():
                 s = Success()
                 s.name = r
@@ -81,7 +68,6 @@ class MoveCreatedJobstoQueue(SingletonThread):
                 s.enabled = r.enabled
                 s.others = r.others
                 s.save()
-                successful_list.append(r)
 
 
 class ScheduleUpkeepWorker1(SingletonThread):
@@ -89,17 +75,47 @@ class ScheduleUpkeepWorker1(SingletonThread):
     def run(self):
         print("ScheduleUpkeep worker started! for worker 1")
         while 1:
+            sleep(1)
             self.check_schedule()
 
     def check_schedule(self):
-        for r in Run.objects.filter(enabled=True):
-            running_edit = Run.objects.get(id=r.id)  # object to update
-            # we can do any task here to take as a task for example we can use sleep instead of task.
-            running_edit.enabled = False
-            running_edit.save()  # save object
-            sleep(60 * r.time)
-            running_edit.time = 0  # update name
-            running_edit.save()  # save object
+
+        for q in Queue.objects.filter(enabled=True):
+            # print(q, "Worker Thread Run Addition")
+            run_exist_w1 = False
+
+            for rt in Run.objects.filter():
+                if rt.name_id == q.id:
+                    run_exist_w1 = True
+                    break
+
+            if run_exist_w1:
+                continue
+
+            with transaction.atomic():
+                s = Run()
+                s.name = q
+                s.time = q.time
+                s.description = q.description
+                s.enabled = q.enabled
+                s.others = q.others
+                s.save()
+
+                queue_edit = Queue.objects.get(id=q.id)  # object to update
+                queue_edit.enabled = False  # update name
+                queue_edit.save()  # save object
+
+            try:
+                running_edit = Run.objects.get(
+                    name_id=q.id)  # object to update
+                print("I'm sleeping worker 1")
+                sleep(60 * q.time)
+                running_edit.time = 0  # update name
+                running_edit.enabled = False
+                running_edit.save()  # save object
+            except Exception as e:
+                print(e)
+                continue
 
             print("I will do all the work for worker 1")
 
@@ -109,19 +125,47 @@ class ScheduleUpkeepWorker2(SingletonThread):
     def run(self):
         print("ScheduleUpkeep worker started! for worker 2")
         while 1:
-            sleep(1000)
+            sleep(2)
             self.check_schedule()
 
     def check_schedule(self):
-        for r in Run.objects.filter(enabled=True):
-            running_edit = Run.objects.get(id=r.id)  # object to update
-            # we can do any task here to take as a task for example we can use sleep instead of task.
-            running_edit.enabled = False
-            running_edit.save()  # save object
-            sleep(60 * r.time)
-            running_edit.time = 0  # update name
-            running_edit.save()  # save object
-        print("I will do all the work for worked 2")
+
+        for q in Queue.objects.filter(enabled=True):
+            # print(q, "Worker Thread Run Addition")
+            run_exist_w2 = False
+
+            for rt in Run.objects.filter():
+                if rt.name_id == q.id:
+                    run_exist_w2 = True
+                    break
+
+            if run_exist_w2:
+                continue
+
+            with transaction.atomic():
+                s = Run()
+                s.name = q
+                s.time = q.time
+                s.description = q.description
+                s.enabled = q.enabled
+                s.others = q.others
+                s.save()
+
+                queue_edit = Queue.objects.get(id=q.id)  # object to update
+                queue_edit.enabled = False  # update name
+                queue_edit.save()  # save object
+
+            try:
+                running_edit = Run.objects.get(
+                    name_id=q.id)  # object to update
+                print("I'm sleeping worker 2")
+                sleep(60 * q.time)
+                running_edit.time = 0  # update name
+                running_edit.enabled = False
+                running_edit.save()  # save object
+            except Exception as e:
+                print(e)
+                continue
 
 
 class ScheduleUpkeepWorker3(SingletonThread):
@@ -129,19 +173,46 @@ class ScheduleUpkeepWorker3(SingletonThread):
     def run(self):
         print("ScheduleUpkeep worker started! for worker 3")
         while 1:
-            sleep(1000)
+            sleep(3)
             self.check_schedule()
 
     def check_schedule(self):
-        for r in Run.objects.filter(enabled=True):
-            running_edit = Run.objects.get(id=r.id)  # object to update
-            # we can do any task here to take as a task for example we can use sleep instead of task.
-            running_edit.enabled = False
-            running_edit.save()  # save object
-            sleep(60 * r.time)
-            running_edit.time = 0  # update name
-            running_edit.save()  # save object
-        print("I will do all the work for worker 3")
+        for q in Queue.objects.filter(enabled=True):
+            # print(q, "Worker Thread Run Addition")
+            run_exist_w3 = False
+
+            for rt in Run.objects.filter():
+                if rt.name_id == q.id:
+                    run_exist_w3 = True
+                    break
+
+            if run_exist_w3:
+                continue
+
+            with transaction.atomic():
+                s = Run()
+                s.name = q
+                s.time = q.time
+                s.description = q.description
+                s.enabled = q.enabled
+                s.others = q.others
+                s.save()
+
+                queue_edit = Queue.objects.get(id=q.id)  # object to update
+                queue_edit.enabled = False  # update name
+                queue_edit.save()  # save object
+
+            try:
+                running_edit = Run.objects.get(
+                    name_id=q.id)  # object to update
+                print("I'm sleeping worker 3")
+                sleep(60 * q.time)
+                running_edit.time = 0  # update name
+                running_edit.enabled = False
+                running_edit.save()  # save object
+            except Exception as e:
+                print(e)
+                continue
 
 
 class Summary_created(APIView):

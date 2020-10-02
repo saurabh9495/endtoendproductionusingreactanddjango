@@ -88,14 +88,15 @@ WSGI_APPLICATION = 'djangobackend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+# Please set up a localhost Mysql DB or Just Setup a cloud SQL instance for running the App.
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_name',
-        'USER': 'db_user',
-        'PASSWORD': 'db_pass',
-        'HOST': 'db_instance_ip',
+        'NAME': 'database',
+        'USER': 'database_user',
+        'PASSWORD': 'database_password',
+        'HOST': 'database_host',
         'PORT': '3306',
     }
 }

@@ -13,7 +13,7 @@ def admin_register(cls):
 @admin_register
 class Create(models.Model):
     name = models.CharField(max_length=256, blank=True)
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)
@@ -26,7 +26,7 @@ class Create(models.Model):
 class Queue(models.Model):
     name = models.ForeignKey(
         Create, on_delete=models.CASCADE, related_name="queue")
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)
@@ -39,7 +39,7 @@ class Queue(models.Model):
 class Halt(models.Model):
     name = models.ForeignKey(
         Queue, on_delete=models.CASCADE, related_name="halt")
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)
@@ -52,7 +52,7 @@ class Halt(models.Model):
 class Run(models.Model):
     name = models.ForeignKey(
         Queue, on_delete=models.CASCADE, related_name="run")
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)
@@ -65,7 +65,7 @@ class Run(models.Model):
 class Abort(models.Model):
     name = models.ForeignKey(
         Queue, on_delete=models.CASCADE, related_name="abort")
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)
@@ -78,7 +78,7 @@ class Abort(models.Model):
 class Deleted(models.Model):
     name = models.ForeignKey(
         Queue, on_delete=models.CASCADE, related_name="delete")
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)
@@ -91,7 +91,7 @@ class Deleted(models.Model):
 class Success(models.Model):
     name = models.ForeignKey(
         Run, on_delete=models.CASCADE, related_name="success")
-    time = models.IntegerField(blank=True)
+    time = models.IntegerField(blank=True, default=0)
     description = models.CharField(max_length=256, blank=True)
     enabled = models.BooleanField(default=True)
     others = models.CharField(max_length=256, blank=True)

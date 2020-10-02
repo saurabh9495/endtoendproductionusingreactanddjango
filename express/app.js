@@ -195,22 +195,6 @@ app.get("/api/v1/data/successful/", (req, res) => {
   });
 });
 
-app.get("/api/v1/comments/:id", (req, res) => {
-  var options = {
-    method: "GET",
-    url: "http://saurabh9495.org:8000" + req.url,
-    headers: {
-      "cache-control": "no-cache",
-      Authorization: req.headers.authorization
-    }
-  };
-
-  request(options, function(error, response, body) {
-    if (error) throw new Error(error);
-    res.status(response.statusCode).send(body);
-  });
-});
-
 const httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(443, () => {

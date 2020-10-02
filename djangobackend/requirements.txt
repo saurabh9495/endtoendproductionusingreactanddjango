@@ -7,5 +7,4 @@ redis
 pytz
 requests
 djangorestframework_simplejwt
-
-
+PyMySQL
