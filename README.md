@@ -1,5 +1,7 @@
 # endtoendproductionusingreactanddjango
 
+##live demo available at https://saurabh9495.org/ , creds: username: saurabh9495 password: n5y11bp7rznt
+
 ## clone the repo
 1.
 
