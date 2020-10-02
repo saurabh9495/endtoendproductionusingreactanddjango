@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.29cf6a03.chunk.css",
+    "main.js": "/static/js/main.9e7da5bf.chunk.js",
+    "main.js.map": "/static/js/main.9e7da5bf.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.89ce72de.js",
+    "runtime-main.js.map": "/static/js/runtime-main.89ce72de.js.map",
+    "static/css/2.54b1eb90.chunk.css": "/static/css/2.54b1eb90.chunk.css",
+    "static/js/2.b0cbed5e.chunk.js": "/static/js/2.b0cbed5e.chunk.js",
+    "static/js/2.b0cbed5e.chunk.js.map": "/static/js/2.b0cbed5e.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.680756672b0a68fdeb79629abbaba366.js": "/precache-manifest.680756672b0a68fdeb79629abbaba366.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.54b1eb90.chunk.css.map": "/static/css/2.54b1eb90.chunk.css.map",
+    "static/css/main.29cf6a03.chunk.css.map": "/static/css/main.29cf6a03.chunk.css.map",
+    "static/js/2.b0cbed5e.chunk.js.LICENSE.txt": "/static/js/2.b0cbed5e.chunk.js.LICENSE.txt",
+    "static/media/techa.jpg": "/static/media/techa.00d9c602.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.89ce72de.js",
+    "static/css/2.54b1eb90.chunk.css",
+    "static/js/2.b0cbed5e.chunk.js",
+    "static/css/main.29cf6a03.chunk.css",
+    "static/js/main.9e7da5bf.chunk.js"
+  ]
+}

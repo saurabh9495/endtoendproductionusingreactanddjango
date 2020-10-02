@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  table-layout: fixed;
+}
+
+.table {
+  border: 1px solid lightgray;
+}
+.table_th {
+  background-color: silver;
+  text-align: center;
+  padding: 10px;
+}
+.table_td {
+  width: 200px;
+  border: 1px dotted silver;
+  text-align: center;
+  padding: 10px;
+}
+
+.paragraph {
+  border: 1px solid lightgray;
+  background-color: green;
+  text-align: center;
+  color: red;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
